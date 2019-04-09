@@ -55,20 +55,7 @@ public class VoterVerifyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            doGet(request,response);
-            action = request.getParameter("action");
-            String securityAnswer = "";
-             if(action.equalsIgnoreCase("verify")){
-              securityAnswer =  request.getParameter("securityAnswer");
-        }
-        if(securityAnswer.trim().equalsIgnoreCase("Pizza")){
-                   RequestDispatcher nextPage = request.getRequestDispatcher("/homepage.jsp"); 
-                   nextPage.forward(request, response);
-        }
-        else{
-            RequestDispatcher nextPage = request.getRequestDispatcher("/voterVerify.jsp"); 
-            nextPage.forward(request, response);
-        }
+            doGet(request,response);           
     }
 
     /**
@@ -93,7 +80,7 @@ public class VoterVerifyController extends HttpServlet {
            name = request.getParameter("Name");
            securityQuesAns = voterDao.getSecurityQues(nid, name);
            request.setAttribute("securityQuestion", securityQuesAns.get(0));
-           request.setAttribute("securityAnswer", securityQuesAns.get(1));
+           request.setAttribute("setSecurityAns", securityQuesAns.get(1));
            if(securityQuesAns.get(0).equals("")){
                RequestDispatcher rd=request.getRequestDispatcher("/error.jsp");  
                rd.include(request, response);
@@ -109,40 +96,19 @@ public class VoterVerifyController extends HttpServlet {
            out.println("<h1> Something went wrong </h1>");
        }
 
-        RequestDispatcher rd=request.getRequestDispatcher("/voterVerify.jsp");  
-        rd.include(request, response);
-       String securityAnswer = "";
+       String userAnswer = "";
        if(action.equalsIgnoreCase("verify")){
-             securityAnswer =  request.getParameter("securityAnswer");
-       }
-       if(securityAnswer.trim().equalsIgnoreCase("Pizza")){
+             userAnswer =  request.getParameter("securityAnswer");
+            if(userAnswer.trim().equalsIgnoreCase(securityQuesAns.get(1).trim())){
                   RequestDispatcher nextPage = request.getRequestDispatcher("/homepage.jsp"); 
                   nextPage.forward(request, response);
-       }
-       else{
-           RequestDispatcher nextPage = request.getRequestDispatcher("/voterVerify.jsp"); 
-           nextPage.forward(request, response);
-       }
-        
-        if(count != 0){
-              
-               if(securityAnswer.trim().equalsIgnoreCase("Pizza")){
-                  RequestDispatcher nextPage = request.getRequestDispatcher("/homepage.jsp"); 
-                  nextPage.forward(request, response);
-               }
-               else{
-                 count--;
-             
-              out.println("<h1>" + "Incorrect answer. Remaining attempts "+ count + "</h1>");
-              }
-              
-          }
-        else{
-            count = 3;
+            }
+          else{
+             RequestDispatcher nextPage = request.getRequestDispatcher("/voterVerify.jsp"); 
+             nextPage.forward(request, response);
+            }
         }
-         
-          
-       }
+      }
     
        //out.println("<h1> Something went wrong" +securityQuesAns.get(1)+ "</h1>");
     }

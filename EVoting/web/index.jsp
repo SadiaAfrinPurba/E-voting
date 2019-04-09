@@ -72,10 +72,7 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                    <a class="btn-flat modal-close" href="#">Close</a>
-                    
-                </div>
+     
                 
 
             </div>
