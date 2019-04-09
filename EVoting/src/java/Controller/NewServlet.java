@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controller;
 
-import RMI.SystemInterface;
-import RMI.SystemInterfaceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author afrin
  */
-public class Enter extends HttpServlet {
+@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
+public class NewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,36 +29,18 @@ public class Enter extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final int PORT = 5500;
-    private boolean canEnter;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, RemoteException, NotBoundException {
-        
-        
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String nId = request.getParameter("nid");
-        String voterName = request.getParameter("name");
-        
-        Registry registry = LocateRegistry.getRegistry("localhost",PORT);
-        SystemInterface stub = (SystemInterface) registry.lookup("Enter");
-      
-        canEnter = stub.enter(nId, voterName);
-        if(canEnter){
-            
-        }
-        else{
-            //RequestDispatcher rd = RequestDispatcher.
-        }
-        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Enter</title>");            
+            out.println("<title>Servlet NewServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Enter at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,7 +57,7 @@ public class Enter extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, RemoteException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -93,7 +71,7 @@ public class Enter extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, RemoteException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

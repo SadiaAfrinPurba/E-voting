@@ -1,9 +1,11 @@
+<%-- 
+    Document   : index
+    Created on : Apr 9, 2019, 2:05:53 PM
+    Author     : afrin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>E-voting</title>
@@ -45,28 +47,28 @@ and open the template in the editor.
             <div id="modal-enter" class="modal">
                 <div class="modal-content">
                     <div class="row">
-                        <form class="col s12" action="/Enter" method="POST">
+                        <form class="col s12" action="/VoterVerifyController?action=securitycheck" method="POST">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">fingerprint</i>
-                                    <input id="nID" type="tel" class="validate" required>
+                                    <input id="nID" type="text" name="nid" class="validate" required>
                                     <label for="nID">NID</label>
                                 </div>
 
                             </div>
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">face</i>
-                                <input id="name" type="text" class="validate" required>
+                                <input id="name" type="text" name="Name" class="validate" required>
                                 <label for="name">Name</label>
                             </div>
                             <div class="row center-align">
-                                <div class="col s12">
-                                    <input type="submit" value="Next" name="next" class="btn waves-effect teal white-text">
-
-                                </div>
-                               
+                                <input type="submit" value="Next" name="next" class="btn waves-effect teal white-text">
+                                                 
                             </div>
-                        </form>
+                               
+                          
+                         </form>
+                       </div>
                     </div>
 
                 </div>
@@ -74,6 +76,7 @@ and open the template in the editor.
                     <a class="btn-flat modal-close" href="#">Close</a>
                     
                 </div>
+                
 
             </div>
 
@@ -86,9 +89,11 @@ and open the template in the editor.
         <script>
             $(document).ready(function(){
                 $('.modal').modal();
+                $('.collapsible').collapsible();
                
             });
         
         </script>
     </body>
 </html>
+
