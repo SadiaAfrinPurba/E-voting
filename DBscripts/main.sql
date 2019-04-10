@@ -2,12 +2,11 @@
 
 CREATE TABLE User (
        user_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-       user_nid INT UNSIGNED NOT NULL,
        user_name VARCHAR (50),
-       user_phoneNo INT UNSIGNED NOT NULL,
+       user_phoneNo VARCHAR (11),
 	user_email VARCHAR (50),
 	user_password VARCHAR (100),
-       PRIMARY KEY (user_id,user_nid)
+       PRIMARY KEY (user_id)
 );
 
 CREATE TABLE Election (
@@ -47,7 +46,8 @@ CREATE TABLE Result (
 
 
 INSERT INTO Election (election_name,election_start,election_end)
-       VALUES ('Dhaka City Mayor Election',NOW(),NOW());
+       VALUES ('Dhaka City Mayor Election',NOW(),NOW()),
+       ('Rangpur City Mayor Election',NOW(),NOW());
 
 INSERT INTO Candidate (candidate_name,candidate_education,candidate_hometown,candidate_experience,candidate_agenda,election_name)
        VALUES ('Md. Ahsan Bari', 'Bsc in Philoshopy', 'Cumilla', '5 years as Mayor', 'I will make this Dhaka city better','Dhaka City Mayor Election'),

@@ -30,8 +30,10 @@ public class VoterDao {
         Voter voter = new Voter();
         try {
             PreparedStatement preparedStatement = conn.
-                    prepareStatement("SELECT voter_sQuestion,voter_sAnswer FROM Voter WHERE voter_nid=?");
+                    prepareStatement("SELECT voter_sQuestion,voter_sAnswer FROM Voter WHERE voter_nid=? and voter_name=?");
             preparedStatement.setInt(1, voterId);
+            preparedStatement.setString(2, name);
+        
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {

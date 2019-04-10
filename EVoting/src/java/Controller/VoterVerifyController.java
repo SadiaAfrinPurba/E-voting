@@ -35,7 +35,7 @@ public class VoterVerifyController extends HttpServlet {
     private int count = 3;
     private String action;
     Voter voter;
-     public VoterVerifyController() throws SQLException{
+    public VoterVerifyController() throws SQLException{
          super();
          voterDao = new VoterDao();
      }
@@ -45,7 +45,7 @@ public class VoterVerifyController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -59,7 +59,7 @@ public class VoterVerifyController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -100,8 +100,10 @@ public class VoterVerifyController extends HttpServlet {
        if(action.equalsIgnoreCase("verify")){
              userAnswer =  request.getParameter("securityAnswer");
             if(userAnswer.trim().equalsIgnoreCase(securityQuesAns.get(1).trim())){
-                  RequestDispatcher nextPage = request.getRequestDispatcher("/homepage.jsp"); 
-                  nextPage.forward(request, response);
+                  
+                   RequestDispatcher rd=request.getRequestDispatcher("/HomepageController");  
+                   rd.forward(request, response);
+                   
             }
           else{
              RequestDispatcher nextPage = request.getRequestDispatcher("/voterVerify.jsp"); 
@@ -109,8 +111,6 @@ public class VoterVerifyController extends HttpServlet {
             }
         }
       }
-    
-       //out.println("<h1> Something went wrong" +securityQuesAns.get(1)+ "</h1>");
     }
 
     /**

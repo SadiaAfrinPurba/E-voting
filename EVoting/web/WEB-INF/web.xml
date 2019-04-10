@@ -7,12 +7,18 @@
         <servlet-name>VoterVerifyController</servlet-name>
         <servlet-class>Controller.VoterVerifyController</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>HomepageController</servlet-name>
+        <servlet-class>Controller.HomepageController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>VoterVerifyController</servlet-name>
         <url-pattern>/VoterVerifyController</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>HomepageController</servlet-name>
+        <url-pattern>/HomepageController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
