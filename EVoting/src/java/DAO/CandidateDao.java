@@ -63,7 +63,7 @@ public class CandidateDao {
                 
            
           }
-            System.out.println("Candidate object "+ candidateList.get(1));
+           
         } catch (SQLException e) {
             e.printStackTrace();
         }

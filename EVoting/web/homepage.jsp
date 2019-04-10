@@ -51,17 +51,17 @@
                         <li>
                             <c:choose>
                                 <c:when test="${param.isLogin==null}">
-                                    <form method="post" action="/UserController?action=login">
+                                    <form method="post" action="/login.jsp">
                                         <input type="submit" value="Login" class="btn white-text">
                                     </form>
                                 </c:when>
                                 <c:when test="${param.isLogin!=null}">
-                                        <form method="post" action="/UserController?action=logout">
+                                        <form method="POST" action="/UserController?action=logout">
                                             <input type="submit" value="Logout" class="btn white-text">
                                         </form>
                                 </c:when>       
                                 <c:otherwise>
-                                    <form method="post" action="/UserController?action=login">
+                                    <form method="post" action="/login.jsp">
                                         <input type="submit" value="Login" class="btn white-text">
                                     </form>
                                 </c:otherwise>

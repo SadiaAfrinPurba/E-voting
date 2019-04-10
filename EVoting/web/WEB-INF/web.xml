@@ -11,6 +11,10 @@
         <servlet-name>HomepageController</servlet-name>
         <servlet-class>Controller.HomepageController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>Controller.UserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>VoterVerifyController</servlet-name>
         <url-pattern>/VoterVerifyController</url-pattern>
@@ -18,6 +22,10 @@
     <servlet-mapping>
         <servlet-name>HomepageController</servlet-name>
         <url-pattern>/HomepageController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/UserController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
