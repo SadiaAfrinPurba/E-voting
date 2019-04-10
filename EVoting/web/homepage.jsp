@@ -46,25 +46,35 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#section_castVote">Cast Vote</a></li>
                         <li><a href="#section_result">Result</a></li>
-                        <c:if test="${param.isLogin!=null}">
-                            <li><a href="#">Edit Profile</a></li>
-                        </c:if>
+                             <%
+                               String username= (String) session.getAttribute("isLogin");                     
+                               if (username != null) {
+                             %>
+                         <li><a href="#">Edit Profile</a></li>
+
+                            <% } 
+                            %>
+                                
+                            
                         <li>
                              <%
-                String username= (String) session.getAttribute("isLogin");                     
-                if (username == null) {
- %>
-            <form method="post" action="/login.jsp">
-                 <input type="submit" value="Login" class="btn white-text">
-            </form>
+                               String username1= (String) session.getAttribute("isLogin");                     
+                               if (username1 == null) {
+                             %>
+                        <form method="post" action="/login.jsp">
+                           <input type="submit" value="Login" class="btn white-text">
+                         </form>
 
-        <% } else {
-         %>
-           <form method="POST" action="/UserController?action=logout">
-                <input type="submit" value="Logout" class="btn white-text">
-            </form>
-        <% }
-%>
+                            <% } else if(username1 != null) {%>
+                                  <form method="POST" action="/UserController?action=logout">
+                                      <input type="submit" value="Logout" class="btn white-text">
+                                 </form>
+                              <% }
+                          else  { %>
+                            <form method="post" action="/login.jsp">
+                                <input type="submit" value="Login" class="btn white-text">
+                             </form>
+                           <% } %>
 
                            
                            

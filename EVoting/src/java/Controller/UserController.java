@@ -34,7 +34,7 @@ public class UserController extends HttpServlet {
     private UserDao userDao;
     private ElectionDao electionDao;
     private CandidateDao candidateDao;
-    private HttpSession session;
+    private HttpSession session = null;
     public UserController() throws SQLException{
          super();
          userDao = new UserDao();
@@ -56,6 +56,15 @@ public class UserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         action = request.getParameter("action");
+        
+        //Fetch Election info
+        Election election = electionDao.getAllElectionInfo();
+        request.setAttribute("setElectionInfo", election);
+            
+        //Fetch Candidate info
+        List<Candidate> candidateList = new ArrayList<Candidate>();
+        candidateList = candidateDao.getAllUsers();
+        request.setAttribute("setCandidateInfo",candidateList);
         
         if(action.trim().equalsIgnoreCase("register".trim())){
             
@@ -85,17 +94,10 @@ public class UserController extends HttpServlet {
         if(action.trim().equalsIgnoreCase("login".trim())){
           boolean success = userDao.loginUser(request.getParameter("Username"), request.getParameter("Password"));
           if(success){
-              session=request.getSession(true);
+              session=request.getSession();
               session.setAttribute("isLogin","user");
                
-            //Fetch Election info
-             Election election = electionDao.getAllElectionInfo();
-            request.setAttribute("setElectionInfo", election);
-            
-            //Fetch Candidate info
-             List<Candidate> candidateList = new ArrayList<Candidate>();
-             candidateList = candidateDao.getAllUsers();
-             request.setAttribute("setCandidateInfo",candidateList);
+ 
             
              //response.sendRedirect("/homepage.jsp"); no info from db will be shown
 //
@@ -109,7 +111,23 @@ public class UserController extends HttpServlet {
               response.sendRedirect("/login.jsp");
           }
       }
+      if(action.trim().equalsIgnoreCase("logout".trim())){
+          session.removeAttribute("User");
+          session.invalidate();
+          
+          //Prevent back button to login
+          response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
+          response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
+          response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
+          response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
+          
+          RequestDispatcher rd = request.getRequestDispatcher("/homepage.jsp");
+          rd.forward(request, response);
 
+          
+      }
+        
+   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
