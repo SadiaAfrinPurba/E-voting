@@ -8,6 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page import="Models.Election" %>
+<%@ page import="Models.Candidate" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -107,12 +108,14 @@
 
             <!-- Cast Vote -->
             <div class="section" id="section_castVote">
+                 
                     <ul class="collapsible expandable collection with-header">
-                        <li class="collection-header"><h4>Candidate Names</h4></li>
+                        <li class="collection-header"><h4>Candidate</h4></li>
+                        <c:forEach items="${setCandidateInfo}" var="candidate">
                          <li>
                             <div class="collapsible-header">
                                 <i class="material-icons">filter_drama</i>
-                                 First
+                                 <c:out value="${candidate.candidateName}" />
                             </div>
                             <div class="collapsible-body">
                                     <form>
@@ -120,8 +123,9 @@
                                      </form>
                             </div>
                         </li>
-                       
+                        </c:forEach>
                     </ul>
+                 
             </div>
 
 

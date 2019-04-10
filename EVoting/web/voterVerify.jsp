@@ -14,9 +14,13 @@
          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
          <!-- Compiled and minified CSS -->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     </head>
     <body>
         <div class="container">
+            <main>
+            
+                
             <form class="col s12" action="/VoterVerifyController?action=verify"method="POST">
                     <div class="row col s12">
                         <div class="input-field col s6">
@@ -37,7 +41,7 @@
                     </div>
                    
             </form>
-
+           </main>
         </div>
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

@@ -8,11 +8,14 @@ package Controller;
 
 import DAO.CandidateDao;
 import DAO.ElectionDao;
+import Models.Candidate;
 import Models.Election;
 import com.oracle.jrockit.jfr.RequestDelegate;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -58,6 +61,9 @@ public class HomepageController extends HttpServlet {
             request.setAttribute("setElectionInfo", election);
             
             //Fetch Candidate info
+             List<Candidate> candidateList = new ArrayList<Candidate>();
+             candidateList = candidateDao.getAllUsers();
+             request.setAttribute("setCandidateInfo",candidateList);
             
             
               RequestDispatcher rd=request.getRequestDispatcher("/homepage.jsp");  
