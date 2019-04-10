@@ -162,10 +162,23 @@
                                               </tr>
                                             </tbody>
                                           </table>
-                                                
-                                <form class="center-align">
-                                    <li class="btn">Vote</li>
-                                </form>
+                                <%
+                String username2= (String) session.getAttribute("isLogin");                     
+                if (username2 == null) {
+ %>
+            <form class="center-align">
+                 <input type="submit" value="Vote" class="btn disabled">
+            </form>
+
+        <% } else {
+         %>
+           <form method="POST" action="/UserController?action=vote" class="center-align">
+                <input type="submit" value="Vote ${candidate.candidateID}" class="btn" name="vote">
+                
+            </form>
+        <% }
+%>                
+                                
                             </div>
                         </li>
                         </c:forEach>

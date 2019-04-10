@@ -54,6 +54,7 @@ public class UserController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
         action = request.getParameter("action");
         
@@ -65,6 +66,9 @@ public class UserController extends HttpServlet {
         List<Candidate> candidateList = new ArrayList<Candidate>();
         candidateList = candidateDao.getAllUsers();
         request.setAttribute("setCandidateInfo",candidateList);
+       
+ 
+       
         
         if(action.trim().equalsIgnoreCase("register".trim())){
             
@@ -106,9 +110,10 @@ public class UserController extends HttpServlet {
                
           }
           else{
-              PrintWriter out = response.getWriter();
+             
               out.println("<h5> Username or Password is Wrong! </h5>");
-              response.sendRedirect("/login.jsp");
+              RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+              rd.include(request, response);
           }
       }
       if(action.trim().equalsIgnoreCase("logout".trim())){
@@ -125,6 +130,13 @@ public class UserController extends HttpServlet {
           rd.forward(request, response);
 
           
+      }
+      if(action.trim().equalsIgnoreCase("vote".trim())){
+          
+          String values = request.getParameter("vote");
+          String[] value = values.split(" "); 
+          out.print(value[1]);
+          Integer.valueOf(value[1]);	
       }
         
    
