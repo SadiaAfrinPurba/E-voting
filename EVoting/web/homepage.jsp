@@ -7,8 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page import="Models.Election" %>
-<%@ page import="Models.Candidate" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -52,17 +51,17 @@
                         <li>
                             <c:choose>
                                 <c:when test="${param.isLogin==null}">
-                                    <form method="post" action="/LoginController">
+                                    <form method="post" action="/UserController?action=login">
                                         <input type="submit" value="Login" class="btn white-text">
                                     </form>
                                 </c:when>
                                 <c:when test="${param.isLogin!=null}">
-                                        <form method="post" action="/LogoutController">
+                                        <form method="post" action="/UserController?action=logout">
                                             <input type="submit" value="Logout" class="btn white-text">
                                         </form>
                                 </c:when>       
                                 <c:otherwise>
-                                    <form method="post" action="/LoginController">
+                                    <form method="post" action="/UserController?action=login">
                                         <input type="submit" value="Login" class="btn white-text">
                                     </form>
                                 </c:otherwise>
@@ -75,16 +74,18 @@
             </nav>
             <!-- Mobile navbar -->
             <ul class="sidenav" id="mobile-demo">
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="badges.html">Components</a></li>
-                    <li><a href="collapsible.html">Javascript</a></li>
-                    <li><a href="mobile.html">Mobile</a></li>
+                    <li><a href="#section_castVote">Cast Vote</a></li>
+                    <li><a href="#section_result">Result</a></li>
+                    <c:if test="${param.isLogin!=null}">
+                        <li><a href="editProfile.jsp">Edit Profile</a></li>
+                     </c:if>
+                    
             </ul>
 
             <!-- Running Election -->
             <div class="section" id="section_election">
                 <table class="highlight centered responsive-table">
-                   <h3>Running Election</h2>
+                   <h3>Standings</h2>
                     <thead>
                         <tr>
                             <th>Election Name</th>
@@ -114,18 +115,76 @@
                         <c:forEach items="${setCandidateInfo}" var="candidate">
                          <li>
                             <div class="collapsible-header">
-                                <i class="material-icons">filter_drama</i>
+                                <img src="data:image/jpg;base64,${candidate.base64Image}" class=" circle responsive-img materialboxed" width="100" height="100"/>
+                               
                                  <c:out value="${candidate.candidateName}" />
                             </div>
                             <div class="collapsible-body">
-                                    <form>
-                                        <li class="btn">Vote</li>
-                                     </form>
+                                    <table>
+                                          <!-- <thead>
+                                              <tr>
+                                                  <th>Name</th>
+                                                  <th>Item Name</th>
+                                                  <th>Item Price</th>
+                                              </tr>
+                                            </thead> -->
+                                    
+                                            <tbody>
+                                              <tr>
+                                                <td>Education</td>
+                                                <td><c:out value="${candidate.candidateEducation}" /></td>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <td>Hometown</td>
+                                                <td><c:out value="${candidate.candidateHometown}" /></td>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <td>Previous Election Experience</td>
+                                                <td><c:out value="${candidate.candidateExp}" /></td>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <td>Promised to do</td>
+                                                <td><c:out value="${candidate.candidateAgenda}" /></td>
+                                                
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                                
+                                <form class="center-align">
+                                    <li class="btn">Vote</li>
+                                </form>
                             </div>
                         </li>
                         </c:forEach>
                     </ul>
                  
+            </div>
+
+            <!-- Result Showcase -->
+            <div class="section" id="section_result">
+                    <table class="highlight centered responsive-table">
+                       <h3>Standings</h2>
+                        <thead>
+                            <tr>
+                                <th>Candidate Name</th>
+                                <th>Vote Count</th>
+                               
+                               
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            <tr >
+                               <td>Name</td>
+                               <td>10</td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                                    
             </div>
 
 
@@ -137,6 +196,7 @@
         <script>
              $(document).ready(function(){
                  $('.sidenav').sidenav();
+                 $('.materialboxed').materialbox();
                 
             });
             var elem = document.querySelector('.collapsible.expandable');

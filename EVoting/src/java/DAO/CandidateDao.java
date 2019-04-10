@@ -7,11 +7,16 @@ package DAO;
 
 import Models.Candidate;
 import Utils.DbHandler;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -24,7 +29,7 @@ public class CandidateDao {
     public CandidateDao() throws SQLException{
         conn = DbHandler.getConnection();
     }
-     public List<Candidate> getAllUsers() {
+     public List<Candidate> getAllUsers() throws SQLException, IOException {
         List<Candidate> candidateList = new ArrayList<Candidate>();
         try {
             Statement statement = conn.createStatement();
@@ -38,9 +43,26 @@ public class CandidateDao {
                 candidate.setCandidateExp(rs.getString("candidate_experience"));
                 candidate.setCandidateAgenda(rs.getString("candidate_agenda"));
                 candidate.setElectioName(rs.getString("election_name"));
+                
+                //For image retrive from database
+                Blob blob = rs.getBlob("candidate_image");
+                InputStream inputStream = blob.getBinaryStream();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int bytesRead = -1;
+                 
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);   
+                }
+                byte[] imageBytes = outputStream.toByteArray();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+ 
+        
+                candidate.setBase64Image(base64Image);
                 candidateList.add(candidate);
                 
-            }
+           
+          }
             System.out.println("Candidate object "+ candidateList.get(1));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,6 +70,8 @@ public class CandidateDao {
 
         return candidateList;
     }
+     
+
 
     
 }
