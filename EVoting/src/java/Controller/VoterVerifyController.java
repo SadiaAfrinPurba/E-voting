@@ -107,7 +107,7 @@ public class VoterVerifyController extends HttpServlet {
             }
           else{
              RequestDispatcher nextPage = request.getRequestDispatcher("/voterVerify.jsp"); 
-             nextPage.forward(request, response);
+             nextPage.include(request, response);
             }
         }
       }

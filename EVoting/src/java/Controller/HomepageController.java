@@ -54,9 +54,6 @@ public class HomepageController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session=request.getSession();
-            session.setAttribute("isLogin", null);
-            
             //Fetch Election info
             Election election = electionDao.getAllElectionInfo();
             request.setAttribute("setElectionInfo", election);
@@ -69,6 +66,9 @@ public class HomepageController extends HttpServlet {
             
               RequestDispatcher rd=request.getRequestDispatcher("/homepage.jsp");  
               rd.forward(request, response);
+                      
+//              RequestDispatcher view=getServletContext().getRequestDispatcher("/UserController");  
+//              view.forward(request, response);
               //response.sendRedirect("/homepage.jsp");
             
            

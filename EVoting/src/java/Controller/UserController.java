@@ -5,10 +5,19 @@
  */
 package Controller;
 
+import DAO.CandidateDao;
+import DAO.ElectionDao;
 import DAO.UserDao;
+import Models.Candidate;
+import Models.Election;
 import Models.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,9 +32,14 @@ import javax.servlet.http.HttpSession;
 public class UserController extends HttpServlet {
     private String action;
     private UserDao userDao;
+    private ElectionDao electionDao;
+    private CandidateDao candidateDao;
+    private HttpSession session;
     public UserController() throws SQLException{
          super();
          userDao = new UserDao();
+         electionDao = new ElectionDao();
+         candidateDao = new CandidateDao();
        }
 
     /**
@@ -38,7 +52,7 @@ public class UserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         
         action = request.getParameter("action");
@@ -71,13 +85,27 @@ public class UserController extends HttpServlet {
         if(action.trim().equalsIgnoreCase("login".trim())){
           boolean success = userDao.loginUser(request.getParameter("Username"), request.getParameter("Password"));
           if(success){
-              HttpSession session=request.getSession();
-              session.setAttribute("isLogin", "login");
-              RequestDispatcher rd = request.getRequestDispatcher("/homepage.jsp");
-              rd.include(request, response);
+              session=request.getSession(true);
+              session.setAttribute("isLogin","user");
+               
+            //Fetch Election info
+             Election election = electionDao.getAllElectionInfo();
+            request.setAttribute("setElectionInfo", election);
+            
+            //Fetch Candidate info
+             List<Candidate> candidateList = new ArrayList<Candidate>();
+             candidateList = candidateDao.getAllUsers();
+             request.setAttribute("setCandidateInfo",candidateList);
+            
+             //response.sendRedirect("/homepage.jsp"); no info from db will be shown
+//
+              RequestDispatcher rd = getServletContext().getRequestDispatcher("/homepage.jsp");
+              rd.forward(request, response);
                
           }
           else{
+              PrintWriter out = response.getWriter();
+              out.println("<h5> Username or Password is Wrong! </h5>");
               response.sendRedirect("/login.jsp");
           }
       }
@@ -96,7 +124,11 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -110,7 +142,11 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
          
     }
     

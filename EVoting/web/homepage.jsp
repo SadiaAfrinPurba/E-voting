@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -49,23 +50,22 @@
                             <li><a href="#">Edit Profile</a></li>
                         </c:if>
                         <li>
-                            <c:choose>
-                                <c:when test="${param.isLogin==null}">
-                                    <form method="post" action="/login.jsp">
-                                        <input type="submit" value="Login" class="btn white-text">
-                                    </form>
-                                </c:when>
-                                <c:when test="${param.isLogin!=null}">
-                                        <form method="POST" action="/UserController?action=logout">
-                                            <input type="submit" value="Logout" class="btn white-text">
-                                        </form>
-                                </c:when>       
-                                <c:otherwise>
-                                    <form method="post" action="/login.jsp">
-                                        <input type="submit" value="Login" class="btn white-text">
-                                    </form>
-                                </c:otherwise>
-                            </c:choose>
+                             <%
+                String username= (String) session.getAttribute("isLogin");                     
+                if (username == null) {
+ %>
+            <form method="post" action="/login.jsp">
+                 <input type="submit" value="Login" class="btn white-text">
+            </form>
+
+        <% } else {
+         %>
+           <form method="POST" action="/UserController?action=logout">
+                <input type="submit" value="Logout" class="btn white-text">
+            </form>
+        <% }
+%>
+
                            
                            
                         </li>
@@ -85,7 +85,7 @@
             <!-- Running Election -->
             <div class="section" id="section_election">
                 <table class="highlight centered responsive-table">
-                   <h3>Standings</h2>
+                   <h3>Running Election</h3>
                     <thead>
                         <tr>
                             <th>Election Name</th>
