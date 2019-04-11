@@ -69,6 +69,26 @@ public class UserDao {
         }
         
         return success;
-    } 
+    }
+    
+    public boolean forgetPassword(String username, String password){
+        boolean success = false;
+        User user = new User();
+        try{
+            
+            PreparedStatement preparedStatement = conn
+                    .prepareStatement("SELECT user_password FROM User WHERE user_id=?");
+             preparedStatement.setString(1,password);
+             preparedStatement.setString(2,username);
+             preparedStatement.executeUpdate();
+             success = true;
+             
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return success;
+        
+    }
     
 }

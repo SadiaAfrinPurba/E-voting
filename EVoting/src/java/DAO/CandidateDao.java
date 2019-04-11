@@ -24,7 +24,7 @@ import java.util.List;
  * @author afrin
  */
 public class CandidateDao {
-        private Connection conn;
+    private Connection conn;
     
     public CandidateDao() throws SQLException{
         conn = DbHandler.getConnection();

@@ -8,8 +8,10 @@ package Controller;
 
 import DAO.CandidateDao;
 import DAO.ElectionDao;
+import DAO.ResultDao;
 import Models.Candidate;
 import Models.Election;
+import Models.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,7 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 /**
  *
@@ -33,10 +35,12 @@ public class HomepageController extends HttpServlet {
     
        private ElectionDao electionDao;
        private CandidateDao candidateDao;
+       private ResultDao resultDao;
        public HomepageController() throws SQLException{
          super();
          electionDao = new ElectionDao();
          candidateDao = new CandidateDao();
+         resultDao = new ResultDao();
      }
 
     /**
@@ -54,6 +58,7 @@ public class HomepageController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             /* TODO output your page here. You may use following sample code. */
+            
             //Fetch Election info
             Election election = electionDao.getAllElectionInfo();
             request.setAttribute("setElectionInfo", election);
@@ -62,15 +67,16 @@ public class HomepageController extends HttpServlet {
              List<Candidate> candidateList = new ArrayList<Candidate>();
              candidateList = candidateDao.getAllUsers();
              request.setAttribute("setCandidateInfo",candidateList);
+             
+             //Fetch Result info
+              List<Result> resultList = new ArrayList<Result>();
+             resultList = resultDao.getAllResult();
+             request.setAttribute("setResultInfo",resultList);
             
             
               RequestDispatcher rd=request.getRequestDispatcher("/homepage.jsp");  
               rd.forward(request, response);
-                      
-//              RequestDispatcher view=getServletContext().getRequestDispatcher("/UserController");  
-//              view.forward(request, response);
-              //response.sendRedirect("/homepage.jsp");
-            
+
            
         }
     }

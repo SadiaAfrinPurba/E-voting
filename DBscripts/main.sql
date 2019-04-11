@@ -50,6 +50,17 @@ INSERT INTO Election (election_name,election_start,election_end)
        VALUES ('Dhaka City Mayor Election',NOW(),NOW()),
        ('Rangpur City Mayor Election',NOW(),NOW());
 
+
+INSERT INTO e_voting.`Result` (election_name, candidate_name, candidate_id, result_vote) 
+	VALUES ('Dhaka City Mayor Election', 'Md. Fazle Rabbi', 1, 0);
+INSERT INTO e_voting.`Result` (election_name, candidate_name, candidate_id, result_vote) 
+	VALUES ('Dhaka City Mayor Election', 'Md. Ahsan Bari', 3, 10);
+INSERT INTO e_voting.`Result` (election_name, candidate_name, candidate_id, result_vote) 
+	VALUES ('Dhaka City Mayor Election', 'Md. Kazi Yasin Ali', 4, 3);
+INSERT INTO e_voting.`Result` (election_name, candidate_name, candidate_id, result_vote) 
+	VALUES ('Dhaka City Mayor Election', 'Md. Syed Fahim', 5, 2);
+
+
 -- INSERT INTO Candidate (candidate_name,candidate_education,candidate_hometown,candidate_experience,candidate_agenda,election_name,candidate_image)
 --        VALUES ('Md. Ahsan Bari', 'Bsc in Philoshopy', 'Cumilla', '5 years as Mayor', 'I will make this Dhaka city better','Dhaka City Mayor Election','/home/afrin/pic/candidate-1.jpg'),
 --              	('Md. Fazle Rabbi', 'Bsc in CSE', 'Rajshahi', '1 year as Minister', 'I will make this Dhaka city better','Dhaka City Mayor Election','/home/afrin/pic/candidate-2.jpg'),

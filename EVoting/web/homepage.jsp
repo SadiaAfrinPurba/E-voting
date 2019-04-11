@@ -131,14 +131,7 @@
                             </div>
                             <div class="collapsible-body">
                                     <table>
-                                          <!-- <thead>
-                                              <tr>
-                                                  <th>Name</th>
-                                                  <th>Item Name</th>
-                                                  <th>Item Price</th>
-                                              </tr>
-                                            </thead> -->
-                                    
+                 
                                             <tbody>
                                               <tr>
                                                 <td>Education</td>
@@ -199,12 +192,14 @@
                             </tr>
                         </thead>
                 
-                        <tbody>
-                            <tr >
-                               <td>Name</td>
-                               <td>10</td>
+                        <tbody> 
+                            <c:forEach items="${setResultInfo}" var="result">
+                            <tr class="highlight">
+                               <td><c:out value="${result.candidateName}" /></td>
+                               <td><c:out value="${result.voteCount}" /></td>
                                
                             </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                                     

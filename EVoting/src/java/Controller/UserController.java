@@ -7,9 +7,11 @@ package Controller;
 
 import DAO.CandidateDao;
 import DAO.ElectionDao;
+import DAO.ResultDao;
 import DAO.UserDao;
 import Models.Candidate;
 import Models.Election;
+import Models.Result;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,12 +36,14 @@ public class UserController extends HttpServlet {
     private UserDao userDao;
     private ElectionDao electionDao;
     private CandidateDao candidateDao;
+    private ResultDao resultDao;
     private HttpSession session = null;
     public UserController() throws SQLException{
          super();
          userDao = new UserDao();
          electionDao = new ElectionDao();
          candidateDao = new CandidateDao();
+         resultDao = new ResultDao();
        }
 
     /**
@@ -66,6 +70,11 @@ public class UserController extends HttpServlet {
         List<Candidate> candidateList = new ArrayList<Candidate>();
         candidateList = candidateDao.getAllUsers();
         request.setAttribute("setCandidateInfo",candidateList);
+        
+         //Fetch Result info
+          List<Result> resultList = new ArrayList<Result>();
+          resultList = resultDao.getAllResult();
+          request.setAttribute("setResultInfo",resultList);
        
  
        
@@ -86,11 +95,12 @@ public class UserController extends HttpServlet {
             boolean success = userDao.registerUser(user);
                if (success){
                    response.sendRedirect("/login.jsp");
-                   //request.setAttribute("success", true);
+                   
             }
             else {
-                request.setAttribute("error", false);
-                response.sendRedirect("/register.jsp");
+                out.println("<h5> Username or Password is already taken! </h5>");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/register.jsp");
+                rd.include(request, response);
                 
            } 
         
@@ -98,13 +108,12 @@ public class UserController extends HttpServlet {
         if(action.trim().equalsIgnoreCase("login".trim())){
           boolean success = userDao.loginUser(request.getParameter("Username"), request.getParameter("Password"));
           if(success){
+              
+              //create a new user session
               session=request.getSession();
               session.setAttribute("isLogin","user");
                
- 
-            
              //response.sendRedirect("/homepage.jsp"); no info from db will be shown
-//
               RequestDispatcher rd = getServletContext().getRequestDispatcher("/homepage.jsp");
               rd.forward(request, response);
                
@@ -135,9 +144,41 @@ public class UserController extends HttpServlet {
           
           String values = request.getParameter("vote");
           String[] value = values.split(" "); 
-          out.print(value[1]);
-          Integer.valueOf(value[1]);	
+          int cID = Integer.valueOf(value[1]);
+          int vote = 1;
+          //count new vote
+          boolean success = resultDao.countVote(cID,vote,candidateList);
+          if(success){
+              RequestDispatcher rd = request.getRequestDispatcher("/homepage.jsp");
+              rd.forward(request, response);
+              
+          }
+          else{
+               RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
+               rd.include(request, response); 
+          }
+         
+          
       }
+      
+      if(action.trim().equalsIgnoreCase("forgetPassword".trim())){
+          boolean success = userDao.forgetPassword(request.getParameter("Username"), request.getParameter("Password"));
+           if(success){
+              out.println("<h5> Successfully password is changed ! </h5>");
+              RequestDispatcher rd = getServletContext().getRequestDispatcher("/forgetPassword.jsp");
+              rd.include(request, response);
+               
+          }
+          else{
+             
+              out.println("<h5> Invalid username </h5>");
+              RequestDispatcher rd = getServletContext().getRequestDispatcher("/forgetPassword.jsp");
+              rd.include(request, response);
+          }
+          
+      }
+      
+      
         
    
     }

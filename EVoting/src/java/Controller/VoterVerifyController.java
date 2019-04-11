@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,6 +83,7 @@ public class VoterVerifyController extends HttpServlet {
            request.setAttribute("securityQuestion", securityQuesAns.get(0));
            request.setAttribute("setSecurityAns", securityQuesAns.get(1));
            if(securityQuesAns.get(0).equals("")){
+               out.println("<h1> Something went wrong. Load again </h1>");
                RequestDispatcher rd=request.getRequestDispatcher("/error.jsp");  
                rd.include(request, response);
            }
@@ -101,6 +103,13 @@ public class VoterVerifyController extends HttpServlet {
              userAnswer =  request.getParameter("securityAnswer");
             if(userAnswer.trim().equalsIgnoreCase(securityQuesAns.get(1).trim())){
                   
+                   //save cookie for a verified voter
+                   Cookie verifiedUser = new Cookie("NID", "Name");
+                   response.addCookie(verifiedUser);
+                   verifiedUser.setMaxAge(60*60);
+                   verifiedUser.setDomain("evoting.com");
+
+                   
                    RequestDispatcher rd=request.getRequestDispatcher("/HomepageController");  
                    rd.forward(request, response);
                    

@@ -13,8 +13,8 @@ public class Result {
     private int resultID;
     private String electionName;
     private String candidateName;
-    private String candidateID;
-    private String voteCount;
+    private int candidateID;
+    private int voteCount;
 
     public int getResultID() {
         return resultID;
@@ -40,21 +40,23 @@ public class Result {
         this.candidateName = candidateName;
     }
 
-    public String getCandidateID() {
+    public int getCandidateID() {
         return candidateID;
     }
 
-    public void setCandidateID(String candidateID) {
+    public void setCandidateID(int candidateID) {
         this.candidateID = candidateID;
     }
 
-    public String getVoteCount() {
+    public int getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(String voteCount) {
+    public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
     }
+
+  
 
     @Override
     public String toString() {

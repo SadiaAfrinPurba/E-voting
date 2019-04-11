@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="row col s12">
-                        <input type="submit" value="Verify" class="btn teal white-text">
+                        <input type="submit" value="Verify" class="btn teal white-text" id="verify">
                         
                     </div>
                    
@@ -49,6 +49,10 @@
         <script>
              $(document).ready(function() {
                      M.updateTextFields();
+             });
+             
+             $("#verify").click(function(){
+                 alert("If you give right answer, cookies will be saved for better user experience!");
              });
         </script>
     </body>

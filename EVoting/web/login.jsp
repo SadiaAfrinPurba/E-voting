@@ -78,7 +78,7 @@
                 <label for='password'>Password</label>
               </div>
               <label style='float: right;'>
-                <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
+                <a class='pink-text' href='forgetPassword.jsp'><b>Forgot Password?</b></a>
 			 </label>
             </div>
 

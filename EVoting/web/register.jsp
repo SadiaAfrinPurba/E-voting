@@ -59,10 +59,6 @@
     <center>
       
       <div class="section"></div>
-      <c:if test="${error == "false"}">
-            <h4 class="red-text">Username or email is already taken! </h4>
-      </c:if>
-      <h4 class="red-text">Username or email is already taken! </h4>
       <h5 class="indigo-text">Please, register an account</h5>
       <div class="section"></div>
 
