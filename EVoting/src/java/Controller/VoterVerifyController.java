@@ -29,11 +29,8 @@ public class VoterVerifyController extends HttpServlet {
     private String name;
     private Connection conn;
     private static final long serialVersionUID = 1L;
-    private static String INSERT_OR_EDIT = "/user.jsp";
-    private static String LIST_USER = "/listUser.jsp";
     private VoterDao voterDao;
     private List<String> securityQuesAns;
-    private int count = 3;
     private String action;
     Voter voter;
     public VoterVerifyController() throws SQLException{

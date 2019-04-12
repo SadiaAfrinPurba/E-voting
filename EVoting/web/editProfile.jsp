@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>eVoting || Forget Password</title>
+        <title>eVoting || Edit Profile</title>
       
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -54,42 +54,58 @@
     <center>
       
       <div class="section"></div>
+      
       <div class="section"></div>
 
       <div class="container">
-        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        <div class="z-depth-1 grey lighten-4 row " style="display: inline-block; padding: 30px 45px 0px 45px; border: 1px solid #EEE;">
 
-          <form class="col s12" method="POST" action="/UserController?action=forgetPassword">
-            <div class='row'>
+          <form class="col s12" method="POST" action="/UserController?action=edit" >
+            <div class='row s12'>
               <div class='col s12'>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='text' name='Username' id='username' />
-                <label for='username'>Username</label>
+                <input class='validate' type='text' name='username' id='username' required/>
+                <label for='username'>User Name</label>
               </div>
             </div>
 
-            <div class='row'>
+            <div class='row '>
               <div class='input-field col s12'>
-                <input class='validate' type='password' name='Password' id='password' />
-                <label for='password'>Change Password</label>
+                <input class='validate' type='text' name='phoneNo' id='phoneNo' required/>
+                <label for='phoneNo'>Phone No</label>
               </div>
               
             </div>
+            <div class='row '>
+                <div class='input-field col s12'>
+                  <input class='validate' type='email' name='email' id='email' required/>
+                  <label for='email'>Email</label>
+                </div>
+                
+            </div>
+            <div class='row '>
+                <div class='input-field col s12'>
+                  <input class='validate' type='password' name='password' id='password' required/>
+                  <label for='password'>Password</label>
+                </div>
+                
+            </div>
+  
 
             <br />
             <center>
               <div class='row'>
-                <button type='submit' class='col s12 btn btn-large waves-effect'>Confirm</button>
+                <button type='submit'  class='col s12 btn btn-large waves-effect'>Edit</button>
               </div>
             </center>
           </form>
         </div>
       </div>
-      <a href="homepage.jsp">Home</a>
+      
     </center>
 
     <div class="section"></div>

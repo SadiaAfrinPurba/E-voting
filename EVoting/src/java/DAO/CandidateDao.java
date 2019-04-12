@@ -6,7 +6,7 @@
 package DAO;
 
 import Models.Candidate;
-import Utils.DbHandler;
+import Utils.Database.DbHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

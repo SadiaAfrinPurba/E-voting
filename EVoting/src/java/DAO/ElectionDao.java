@@ -6,7 +6,7 @@
 package DAO;
 
 import Models.Election;
-import Utils.DbHandler;
+import Utils.Database.DbHandler;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

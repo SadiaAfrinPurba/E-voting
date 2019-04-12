@@ -7,7 +7,7 @@ package DAO;
 
 import Models.Candidate;
 import Models.Result;
-import Utils.DbHandler;
+import Utils.Database.DbHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +49,7 @@ public class ResultDao {
         
         try {
             PreparedStatement preparedStatement = conn.
-                    prepareStatement("SELECT candidate_name,candidate_id FROM Candidate candidate_id=?");
+                    prepareStatement("SELECT candidate_name,candidate_id FROM Result WHERE candidate_id=?");
    
             preparedStatement.setInt(1, cID);
         
@@ -83,10 +83,10 @@ public class ResultDao {
         return success;
     
 }
-public void addNewResult(int cID,String candidateName,String electionName,int vote) throws SQLException{
+    public void addNewResult(int cID,String candidateName,String electionName,int vote) throws SQLException{
         
          PreparedStatement preparedStatement = conn
-                    .prepareStatement("INSERT INTO Result(election_name,candidate_name,candidate_id,result_vote) values (?, ?, ?, ? )");
+                    .prepareStatement("INSERT INTO Result(election_name,candidate_name,candidate_id,result_vote) VALUES (?, ?, ?, ?)");
             // Parameters start with 1
             preparedStatement.setString(1, electionName);
             preparedStatement.setString(2, candidateName);
@@ -99,18 +99,23 @@ public void addNewResult(int cID,String candidateName,String electionName,int vo
             
             //to get the vote count of a candidate
             PreparedStatement preparedStatement = conn
-                    .prepareStatement("SELECT result_vote FROM Result WHERE result_id=?");
+                    .prepareStatement("SELECT result_vote FROM Result WHERE candidate_id=?");
              preparedStatement.setInt(1, cID);
              ResultSet rs = preparedStatement.executeQuery();
-             int previousVote = rs.getInt("result_vote");
+             int previousVote = 0;
+             if(rs.next()){
+                  previousVote = rs.getInt("result_vote");
+             }
+            
              previousVote = previousVote + vote;
              
              PreparedStatement UpdatePreparedStatement = conn
-                    .prepareStatement("UPDATE Result set result_vote=?" +
-                            "where candidate_id=?");
+                    .prepareStatement("UPDATE Result SET result_vote=?" +
+                            " WHERE candidate_id=?");
              
              UpdatePreparedStatement.setInt(1,previousVote);
              UpdatePreparedStatement.setInt(2,cID);
+             UpdatePreparedStatement.executeUpdate();
              previousVote = 0;
         
     }
@@ -119,17 +124,14 @@ public void addNewResult(int cID,String candidateName,String electionName,int vo
         List<Result> resultList = new ArrayList<Result>();
         try {
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Result");
+            ResultSet rs = statement.executeQuery("SELECT * FROM Result ORDER BY result_vote DESC");
             while (rs.next()) {
                 Result result = new Result();
                 result.setResultID(rs.getInt("result_id"));
                 result.setCandidateName(rs.getString("candidate_name"));
                 result.setCandidateID(rs.getInt("candidate_id"));
                 result.setVoteCount(rs.getInt("result_vote"));
-               
                 result.setElectionName(rs.getString("election_name"));
-                
-             
                 resultList.add(result);
                 
            

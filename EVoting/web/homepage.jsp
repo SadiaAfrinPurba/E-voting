@@ -55,7 +55,7 @@
                             <% } 
                             %>
                                 
-                            
+              
                         <li>
                              <%
                                String username1= (String) session.getAttribute("isLogin");                     
@@ -156,21 +156,21 @@
                                             </tbody>
                                           </table>
                                 <%
-                String username2= (String) session.getAttribute("isLogin");                     
-                if (username2 == null) {
- %>
-            <form class="center-align">
-                 <input type="submit" value="Vote" class="btn disabled">
-            </form>
+                                 String username2= (String) session.getAttribute("isLogin");                     
+                                 if (username2 == null) {
+                                %>                
+                                 <form class="center-align">
+                                    <input type="submit" value="Vote" class="btn disabled">
+                                 </form>
 
-        <% } else {
-         %>
-           <form method="POST" action="/UserController?action=vote" class="center-align">
-                <input type="submit" value="Vote ${candidate.candidateID}" class="btn" name="vote">
+                                 <% } else {
+                                  %>
+                                <form method="POST" action="/UserController?action=vote" class="center-align">
+                                      <input type="submit" value="Vote ${candidate.candidateID}" class="btn" name="vote">
                 
-            </form>
-        <% }
-%>                
+                                </form>
+                                <% }
+                                %>                
                                 
                             </div>
                         </li>

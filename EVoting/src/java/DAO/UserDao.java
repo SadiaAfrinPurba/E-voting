@@ -6,7 +6,7 @@
 package DAO;
 
 import Models.User;
-import Utils.DbHandler;
+import Utils.Database.DbHandler;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,5 +90,6 @@ public class UserDao {
         return success;
         
     }
+    
     
 }

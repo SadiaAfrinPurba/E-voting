@@ -12,6 +12,6 @@
         <title>Error</title>
     </head>
     <body>
-        <h1>Something went wrong!Try Again</h1>
+        <h1 class="red-text center-align">Something went wrong!Try Again</h1>
     </body>
 </html>
