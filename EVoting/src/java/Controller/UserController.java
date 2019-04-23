@@ -37,7 +37,9 @@ public class UserController extends HttpServlet {
     private ElectionDao electionDao;
     private CandidateDao candidateDao;
     private ResultDao resultDao;
-    private HttpSession session = null;
+    private HttpSession session = null, votingSession = null;
+    private List<Candidate> candidateList = new ArrayList<Candidate>();
+    private List<Result> resultList = new ArrayList<Result>();
     public UserController() throws SQLException{
          super();
          userDao = new UserDao();
@@ -62,20 +64,7 @@ public class UserController extends HttpServlet {
         
         action = request.getParameter("action");
         
-        //Fetch Election info
-        Election election = electionDao.getAllElectionInfo();
-        request.setAttribute("setElectionInfo", election);
-            
-        //Fetch Candidate info
-        List<Candidate> candidateList = new ArrayList<Candidate>();
-        candidateList = candidateDao.getAllUsers();
-        request.setAttribute("setCandidateInfo",candidateList);
-        
-         //Fetch Result info
-          List<Result> resultList = new ArrayList<Result>();
-          resultList = resultDao.getAllResult();
-          request.setAttribute("setResultInfo",resultList);
-       
+         updateHomepage(request);
  
        
         
@@ -141,7 +130,9 @@ public class UserController extends HttpServlet {
           
       }
       if(action.trim().equalsIgnoreCase("vote".trim())){
-          
+        
+          votingSession=request.getSession();
+          votingSession.setAttribute("alreadyVoted","voteDone");
           String values = request.getParameter("vote");
           String[] value = values.split(" "); 
           int cID = Integer.valueOf(value[1]);
@@ -149,8 +140,13 @@ public class UserController extends HttpServlet {
           //count new vote
           boolean success = resultDao.countVote(cID,vote,candidateList);
           if(success){
-              RequestDispatcher rd = request.getRequestDispatcher("/homepage.jsp");
-              rd.forward(request, response);
+            
+//                  out.println("<h5> Successfully Vote is casted ! </h5>");
+                    updateHomepage(request);
+                    RequestDispatcher rd = request.getRequestDispatcher("/homepage.jsp");
+                    rd.include(request, response);
+               
+              
               
           }
           else{
@@ -177,8 +173,11 @@ public class UserController extends HttpServlet {
           }
           
       }
-       if(action.trim().equalsIgnoreCase("edit".trim())){
-           
+       if(action.trim().equalsIgnoreCase("homepage".trim())){
+           updateHomepage(request);
+       }
+       else{
+           updateHomepage(request);
        }
       
         
@@ -219,11 +218,30 @@ public class UserController extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
          
     }
+    protected void updateHomepage(HttpServletRequest request) throws SQLException, IOException{
+         //Fetch Election info
+        Election election = electionDao.getAllElectionInfo();
+        request.setAttribute("setElectionInfo", election);
+            
+        //Fetch Candidate info
+        
+        candidateList = candidateDao.getAllUsers();
+        request.setAttribute("setCandidateInfo",candidateList);
+        
+         //Fetch Result info
+         
+          resultList = resultDao.getAllResult();
+          request.setAttribute("setResultInfo",resultList);
+       
+    }
+    
     
     }
+
+ 
 
 
 

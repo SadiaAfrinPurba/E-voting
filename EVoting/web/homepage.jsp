@@ -156,8 +156,9 @@
                                             </tbody>
                                           </table>
                                 <%
-                                 String username2= (String) session.getAttribute("isLogin");                     
-                                 if (username2 == null) {
+                                 String username2= (String) session.getAttribute("isLogin");
+                                 String voted = (String) session.getAttribute("alreadyVoted");
+                                 if (username2 == null || voted != null) {
                                 %>                
                                  <form class="center-align">
                                     <input type="submit" value="Vote" class="btn disabled">
@@ -166,7 +167,7 @@
                                  <% } else {
                                   %>
                                 <form method="POST" action="/UserController?action=vote" class="center-align">
-                                      <input type="submit" value="Vote ${candidate.candidateID}" class="btn" name="vote">
+                                    <input id="vote" type="submit" value="Vote ${candidate.candidateID}" class="btn" name="vote" onclick="getCID()">
                 
                                 </form>
                                 <% }
@@ -215,12 +216,17 @@
              $(document).ready(function(){
                  $('.sidenav').sidenav();
                  $('.materialboxed').materialbox();
+                 
                 
             });
             var elem = document.querySelector('.collapsible.expandable');
             var instance = M.Collapsible.init(elem, {
              accordion: false
-}           );
+             });
+             function getCID() {
+                 var cID = document.getElementById("vote").name;
+                 console.log(cID)
+             }
             
         </script>
     </body>
